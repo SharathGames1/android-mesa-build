@@ -1,7 +1,7 @@
 name: Build Android
 
 on:
-  workflow_dispatch:
+  push:
 
 jobs:
   build:
@@ -37,8 +37,8 @@ jobs:
           unzip ${NDK_VER}-linux.zip &> /dev/null
           echo "Get Mesa Repository ..."
           git clone https://gitlab.freedesktop.org/mesa/drm.git
-          git clone --depth 1 --branch mesa-25.1.4 https://gitlab.freedesktop.org/mesa/mesa.git
-          git clone --depth 1 --branch master https://github.com/Vera-Firefly/mesa-build-fix.git
+          git clone --depth 1 --branch mesa-25.2.1 https://gitlab.freedesktop.org/mesa/mesa.git
+          git clone --depth 1 --branch 25.2.1 https://github.com/Vera-Firefly/mesa-build-fix.git
           echo "Extracting Build Fix to Mesa Repository ..."
           cp -rf mesa-build-fix/* mesa/
           echo "Ready!!!"
@@ -70,12 +70,14 @@ jobs:
             -Dplatforms=android \
             -Dplatform-sdk-version=33 \
             -Dandroid-stub=true \
-            -Dandroid-libbacktrace=disabled \
             -Dandroid-strict=false \
+            -Dandroid-libbacktrace=disabled \
             -Dxlib-lease=disabled \
             -Degl=disabled \
             -Dgbm=disabled \
             -Dglx=disabled \
+            -Dgles1=disabled \
+            -Dgles2=disabled \
             -Dllvm=disabled \
             -Dopengl=true \
             -Dosmesa=true \
